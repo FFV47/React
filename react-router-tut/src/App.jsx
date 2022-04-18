@@ -11,7 +11,6 @@ import Missing from "./Missing";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
-import api from "./api/posts";
 import axiosAPI from "./api/axiosAPI";
 import useWindowSize from "./hooks/useWindowSize";
 import useAxiosFetch from "./hooks/useAxiosFetch";
@@ -78,18 +77,6 @@ function App() {
     } else {
       console.log(error);
     }
-
-    // try {
-    //   const response = await api.post("/posts", newPost);
-    //   if (response) {
-    //     setPosts([...posts, response.data]);
-    //     setPostTitle("");
-    //     setPostBody("");
-    //     navigate("/");
-    //   }
-    // } catch (error) {
-    //   apiError(error);
-    // }
   };
 
   const handleEdit = async (id) => {
@@ -106,18 +93,6 @@ function App() {
     } else {
       console.log(error);
     }
-
-    // try {
-    //   const response = await api.put(`/posts/${id}`, updatedPost);
-    //   if (response) {
-    //     setPosts(posts.map((post) => (post.id === id ? response.data : post)));
-    //     setEditTitle("");
-    //     setEditBody("");
-    //     navigate("/");
-    //   }
-    // } catch (error) {
-    //   apiError(error);
-    // }
   };
 
   const handleDelete = async (id) => {
@@ -129,15 +104,6 @@ function App() {
     } else {
       console.log(error);
     }
-    // try {
-    //   const response = await api.delete(`/posts/${id}`);
-    //   if (response) {
-    //     setPosts(posts.filter((post) => post.id !== id));
-    //     navigate("/");
-    //   }
-    // } catch (error) {
-    //   apiError(error);
-    // }
   };
 
   return (
