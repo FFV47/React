@@ -1,17 +1,26 @@
-import React from "react";
-import { useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { format } from "date-fns";
 
-const EditPost = ({
-  posts,
-  handleEdit,
-  editTitle,
-  setEditTitle,
-  editBody,
-  setEditBody,
-}) => {
+import { useStoreState, useStoreActions } from "easy-peasy";
+
+// import DataContext from "./context/DataContext";
+
+const EditPost = () => {
+  // const { posts, setPosts, apiTest } = useContext(DataContext);
+
+  const editTitle = useStoreState((state) => state.editTitle);
+  const editBody = useStoreState((state) => state.editBody);
+  const getPostByID = useStoreState((state) => state.getPostByID);
+
+  const setEditTitle = useStoreActions((actions) => actions.setEditTitle);
+  const setEditBody = useStoreActions((actions) => actions.setEditBody);
+  const editPost = useStoreActions((actions) => actions.editPost);
+
+  const navigate = useNavigate();
+
   const { id } = useParams();
-  const post = posts.find((post) => post.id === Number(id));
+  const post = getPostByID(id);
 
   useEffect(() => {
     if (post) {
@@ -19,6 +28,14 @@ const EditPost = ({
       setEditBody(post.body);
     }
   }, [post, setEditTitle, setEditBody]);
+
+  const handleEdit = (id) => {
+    const datetime = format(new Date(), "MMMM dd, yyyy pp");
+    const updatedPost = { id, "title": editTitle, datetime, "body": editBody };
+
+    editPost(updatedPost);
+    navigate(`/post/${id}`);
+  };
 
   return (
     <main className="NewPost">
@@ -41,7 +58,7 @@ const EditPost = ({
               value={editBody}
               onChange={(e) => setEditBody(e.target.value)}
             />
-            <button type="submit" onClick={() => handleEdit(post.id)}>
+            <button type="button" onClick={() => handleEdit(post.id)}>
               Submit
             </button>
           </form>

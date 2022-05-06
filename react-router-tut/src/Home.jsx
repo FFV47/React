@@ -1,7 +1,15 @@
 import React from "react";
 import Feed from "./Feed";
 
-const Home = ({ posts, fetchError, isLoading }) => {
+// import { useContext } from "react";
+// import DataContext from "./context/DataContext";
+import { useStoreState } from "easy-peasy";
+
+const Home = ({ fetchError, isLoading }) => {
+  // const { searchResults } = useContext(DataContext);
+
+  const searchResults = useStoreState((state) => state.searchResults);
+
   return (
     <main className="Home">
       {isLoading && <p className="statusMsg">Loading posts...</p>}
@@ -12,8 +20,8 @@ const Home = ({ posts, fetchError, isLoading }) => {
       )}
       {!isLoading &&
         !fetchError &&
-        (posts.length > 0 ? (
-          <Feed posts={posts} />
+        (searchResults.length > 0 ? (
+          <Feed posts={searchResults} />
         ) : (
           <p className="statusMsg">No posts to display.</p>
         ))}

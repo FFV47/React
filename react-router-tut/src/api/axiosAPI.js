@@ -2,10 +2,10 @@ import axios from "axios";
 
 class axiosAPI {
   constructor(baseURL, headers) {
-    const controller = new AbortController();
+    this.controller = new AbortController();
     this.instance = axios.create({
       baseURL: baseURL ? baseURL : "",
-      signal: controller.signal,
+      signal: this.controller.signal,
       headers: headers ? headers : {},
     });
     this.response = null;
